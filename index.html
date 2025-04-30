@@ -1,0 +1,808 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>BM Fitness Ware</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet"/>
+  <style>
+    body { 
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    .glass-effect { 
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .glass-effect:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      border-color: rgba(0, 255, 0, 0.2);
+    }
+
+    .neon-border {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      padding: 2px;
+    }
+
+    .neon-border::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #00ff00, #00ffff, #00ff00, #00ffff);
+      z-index: -1;
+      animation: borderGlow 4s linear infinite;
+      border-radius: 20px;
+      opacity: 0.7;
+      filter: blur(5px);
+    }
+
+    @keyframes borderGlow {
+      0% { filter: hue-rotate(0deg) blur(5px); }
+      100% { filter: hue-rotate(360deg) blur(5px); }
+    }
+
+    .nav-item { 
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 0.8rem 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.2), transparent);
+      transition: 0.6s;
+    }
+
+    .nav-item:hover::before {
+      left: 100%;
+    }
+
+    .nav-item:hover { 
+      transform: translateY(-5px) scale(1.05);
+      background: rgba(0, 255, 0, 0.1);
+      box-shadow: 0 10px 20px rgba(0, 255, 0, 0.2);
+    }
+
+    .logo-animation { 
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.7));
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(2deg); }
+    }
+
+    .fade-in { 
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes fadeInUp {
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .pop-up { 
+      animation: popUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes popUp { 
+      0% { transform: scale(0.8) translateY(20px); opacity: 0; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .highlight-text { 
+      color: #00ff00;
+      font-weight: bold;
+      font-size: 1.3em;
+      text-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+      background: linear-gradient(45deg, #00ff00, #00ffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-title {
+      @apply text-4xl font-bold mb-8 text-center;
+      background: linear-gradient(45deg, #00ff00, #00ffff, #00ff00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+      animation: titleGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes titleGlow {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.2); }
+    }
+
+    .workout-card {
+      @apply bg-gradient-to-br from-gray-900 to-gray-800 p-8 rounded-xl shadow-2xl transition-all duration-500;
+      border: 1px solid rgba(0, 255, 0, 0.1);
+      box-shadow: 0 0 40px rgba(0, 255, 0, 0.1);
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .workout-card:hover {
+      transform: translateY(-10px) scale(1.02) rotateX(2deg);
+      box-shadow: 0 0 60px rgba(0, 255, 0, 0.2);
+      border-color: rgba(0, 255, 0, 0.3);
+    }
+
+    .workout-input {
+      @apply w-full p-4 rounded-lg bg-white text-black font-bold border-2 border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-500 transition-all duration-300;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      color: #000000 !important;
+      font-weight: bold !important;
+      transform: translateZ(0);
+    }
+
+    .workout-input:focus {
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.2);
+      background: #ffffff;
+      color: #000000 !important;
+      font-weight: bold !important;
+      transform: translateZ(20px);
+    }
+
+    .upload-btn {
+      @apply bg-gradient-to-r from-green-500 to-cyan-500 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all duration-500 transform hover:scale-105;
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .upload-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+
+    .upload-btn:hover::before {
+      left: 100%;
+    }
+
+    .upload-btn:hover {
+      box-shadow: 0 0 40px rgba(0, 255, 0, 0.5);
+      transform: translateY(-5px) scale(1.05);
+    }
+
+    .workout-tip-card {
+      @apply bg-gradient-to-br from-gray-900 to-gray-800 p-8 rounded-xl shadow-2xl transition-all duration-500;
+      border: 1px solid rgba(0, 255, 0, 0.1);
+      box-shadow: 0 0 40px rgba(0, 255, 0, 0.1);
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .workout-tip-card:hover {
+      transform: translateY(-10px) scale(1.03) rotateX(2deg);
+      box-shadow: 0 0 60px rgba(0, 255, 0, 0.2);
+      border-color: rgba(0, 255, 0, 0.3);
+    }
+
+    .workout-tip-icon {
+      @apply text-5xl text-green-400 mb-6;
+      text-shadow: 0 0 20px rgba(0, 255, 0, 0.7);
+      transform: translateZ(30px);
+    }
+
+    .step-card {
+      @apply bg-gradient-to-br from-gray-900 to-gray-800 p-8 rounded-xl shadow-2xl transition-all duration-500;
+      border: 1px solid rgba(0, 255, 0, 0.1);
+      box-shadow: 0 0 40px rgba(0, 255, 0, 0.1);
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .step-card:hover {
+      transform: translateY(-10px) scale(1.02) rotateX(2deg);
+      box-shadow: 0 0 60px rgba(0, 255, 0, 0.2);
+      border-color: rgba(0, 255, 0, 0.3);
+    }
+
+    .step-number {
+      @apply text-6xl font-bold text-green-400 mb-4;
+      text-shadow: 0 0 25px rgba(0, 255, 0, 0.7);
+      transform: translateZ(40px);
+    }
+
+    .progress-bar {
+      @apply w-full h-3 bg-gray-800 rounded-full overflow-hidden;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .progress-fill {
+      @apply h-full transition-all duration-500;
+      background: linear-gradient(90deg, #00ff00, #00ffff, #00ff00);
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.7);
+      animation: progressGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes progressGlow {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.2); }
+    }
+
+    .video-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .video-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(0, 255, 0, 0.2), rgba(0, 255, 255, 0.2));
+      opacity: 0;
+      transition: 0.5s;
+      z-index: 1;
+    }
+
+    .video-card:hover::before {
+      opacity: 1;
+    }
+
+    .video-card:hover {
+      transform: translateY(-10px) scale(1.05) rotateX(2deg);
+      box-shadow: 0 0 40px rgba(0, 255, 0, 0.3);
+    }
+
+    #video-modal {
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    #video-modal .bg-gray-800 {
+      background: rgba(17, 24, 39, 0.95);
+      border: 1px solid rgba(0, 255, 0, 0.3);
+      box-shadow: 0 0 50px rgba(0, 255, 0, 0.3);
+    }
+
+    .modal-video {
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-video:hover {
+      box-shadow: 0 0 40px rgba(0, 255, 0, 0.3);
+    }
+
+    .floating-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(45deg, #00ff00, #00ffff);
+      color: white;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+      animation: pulse 2s infinite;
+    }
+
+    .floating-btn:hover {
+      transform: scale(1.15) rotate(90deg);
+      box-shadow: 0 0 40px rgba(0, 255, 0, 0.7);
+    }
+
+    .floating-menu {
+      display: none;
+      position: fixed;
+      bottom: 110px;
+      right: 30px;
+      background: rgba(0, 0, 0, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+      z-index: 999;
+      min-width: 220px;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 255, 0, 0.2);
+      transform-origin: bottom right;
+      animation: menuSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes menuSlide {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .floating-menu a {
+      display: block;
+      padding: 15px 25px;
+      color: white;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      font-weight: 500;
+    }
+
+    .floating-menu a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.2), transparent);
+      transition: 0.6s;
+    }
+
+    .floating-menu a:hover::before {
+      left: 100%;
+    }
+
+    .floating-menu a:hover {
+      background: rgba(0, 255, 0, 0.1);
+      color: #00ff00;
+      transform: translateX(10px);
+    }
+
+    .cyber-grid {
+      background-image: 
+        linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+      background-size: 30px 30px;
+      background-position: center center;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 30px 30px; }
+    }
+  </style>
+  <script>
+    let userBMR = 0, userFitnessStatus = '';
+    function calculateBMR(event) {
+      event.preventDefault();
+      const weight = parseFloat(document.getElementById('weight').value);
+      const height = parseFloat(document.getElementById('height').value);
+      const age = parseInt(document.getElementById('age').value);
+      const gender = document.getElementById('gender').value;
+      const goal = document.getElementById('goal').value;
+      
+      userBMR = gender === 'male' ? 
+        88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age) : 
+        447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+      
+      userFitnessStatus = goal === 'weightloss' ? 
+        (userBMR > 2000 ? 'Overweight' : 'Healthy') : 
+        (userBMR < 1500 ? 'Underweight' : 'Healthy');
+      
+      document.getElementById('bmr-result').innerText = `Your BMR is ${userBMR.toFixed(2)} calories/day.`;
+      document.getElementById('fitness-status').innerText = `You are ${userFitnessStatus}.`;
+      document.getElementById('user-bmr-display').innerText = `${userBMR.toFixed(2)} calories/day`;
+      
+      // Update step tracker with user metrics
+      stepTracker.setUserMetrics(weight, height);
+      
+      // Generate and display meal plans
+      const vegMealPlan = getMealPlan(userBMR, true);
+      const nonVegMealPlan = getMealPlan(userBMR, false);
+      
+      displayMealPlan(vegMealPlan, 'veg-meals');
+      displayMealPlan(nonVegMealPlan, 'nonveg-meals');
+      
+      document.getElementById('percentile-result').innerHTML = 
+        `You are above <span class="highlight-text">${calculatePercentile(userBMR).toFixed(2)}%</span> of people around the world.`;
+      
+      highlightCategory();
+      ['bmr-result', 'fitness-status', 'percentile-result'].forEach(id => 
+        document.getElementById(id).classList.add('pop-up'));
+    }
+    function calculateCaloriesBurned(event) {
+      event.preventDefault();
+      const steps = parseInt(document.getElementById('steps').value);
+      document.getElementById('calories-burned').innerText = `You will burn approximately ${(steps / 1000) * 50}.toFixed(2) calories.`;
+    }
+    function calculatePercentile(bmr) {
+      const bmrData = [1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500];
+      return (bmrData.filter(data => bmr > data).length / bmrData.length) * 100;
+    }
+    function highlightCategory() {
+      ['underweight', 'healthy', 'overweight'].forEach(id => document.getElementById(id).classList.remove('highlight'));
+      document.getElementById(userFitnessStatus.toLowerCase()).classList.add('highlight');
+      document.getElementById('global-stats').scrollIntoView({ behavior: 'smooth' });
+    }
+    function toggleFloatingMenu() {
+      const menu = document.getElementById('floating-menu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+  <script src="chatbot/js/enhanced-features.js"></script>
+  <script src="chatbot/js/ui-handlers.js"></script>
+  <script src="js/meal-plans.js"></script>
+  <script src="js/workout-features.js"></script>
+  <script src="js/step-tracking.js"></script>
+</head>
+<body class="bg-black text-white">
+  <header class="bg-gradient-to-r from-green-600 to-violet-600 p-4">
+    <div class="container mx-auto flex justify-between items-center glass-effect">
+      <h1 class="text-2xl font-bold">BM Fitness Ware</h1>
+      <nav>
+        <ul class="flex space-x-4">
+          <li class="nav-item"><a class="hover:text-gray-300" href="#home">Home</a></li>
+          <li class="nav-item"><a class="hover:text-gray-300" href="#bmr">BMR Calculator</a></li>
+          <li class="nav-item"><a class="hover:text-gray-300" href="#meal-charts">Meal Charts</a></li>
+          <li class="nav-item"><a class="hover:text-gray-300" href="#step-target">Step Target</a></li>
+          <li class="nav-item"><a class="hover:text-gray-300" href="#developers-info">Developers Info</a></li>
+          <li class="nav-item"><a class="hover:text-gray-300" href="#global-stats">Global Stats</a></li>
+          <li class="nav-item"><a class="hover:text-gray-300" href="#help-support">Help & Support</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!-- Feature Availability Banner -->
+  <div class="bg-gradient-to-r from-blue-500 to-orange-500 p-4 text-center">
+    <div class="container mx-auto">
+      <h2 class="text-2xl font-bold text-white mb-2">My First Web App - BM Fitness Ware</h2>
+      <p class="text-white font-semibold">
+        <span class="text-green-400">✓</span> Meal Charts Available | 
+        <span class="text-red-400">✗</span> Workout Videos Coming Soon | 
+        <span class="text-red-400">✗</span> AI Photo Analysis Coming Soon | 
+        <span class="text-red-400">✗</span> Step Counter Coming Soon
+      </p>
+    </div>
+  </div>
+  <section class="container mx-auto p-8 text-center glass-effect" id="home">
+    <h2 class="text-3xl font-bold mb-4 text-green-400">Welcome to BM Fitness Ware</h2>
+    <p class="mb-8 text-violet-400 font-bold" style="font-family: 'Montserrat', sans-serif;">Your ultimate fitness companion to track your BMR, get personalized meal charts, and count your steps.</p>
+    <img alt="BM Fitness Ware logo with a green and black theme" class="mx-auto rounded-lg shadow-lg logo-animation" height="200" src="https://storage.googleapis.com/a1aa/image/KFj9kyNtteTuHafZnxNPxcXkRiFNdwvYA9QTZwvKexMm8t2nA.jpg" width="300"/>
+  </section>
+  <section class="container mx-auto p-8" id="bmr">
+    <h2 class="text-3xl font-bold mb-4 fade-in">BMR Calculator</h2>
+    <form class="bg-gray-800 p-6 rounded-lg" onsubmit="calculateBMR(event)">
+      <div class="mb-4">
+        <label class="block text-sm font-medium" for="weight">Weight (kg)</label>
+        <input class="w-full p-2 rounded bg-gray-700 text-white" id="weight" type="number"/>
+      </div>
+      <div class="mb-4">
+        <label class="block text-sm font-medium" for="height">Height (cm)</label>
+        <input class="w-full p-2 rounded bg-gray-700 text-white" id="height" type="number"/>
+      </div>
+      <div class="mb-4">
+        <label class="block text-sm font-medium" for="age">Age</label>
+        <input class="w-full p-2 rounded bg-gray-700 text-white" id="age" type="number"/>
+      </div>
+      <div class="mb-4">
+        <label class="block text-sm font-medium" for="gender">Gender</label>
+        <select class="w-full p-2 rounded bg-gray-700 text-white" id="gender">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label class="block text-sm font-medium" for="goal">Goal</label>
+        <select class="w-full p-2 rounded bg-gray-700 text-white" id="goal">
+          <option value="weightloss">Weight Loss</option>
+          <option value="weightgain">Weight Gain</option>
+        </select>
+      </div>
+      <button class="bg-green-600 p-2 rounded w-full" type="submit">Calculate BMR</button>
+    </form>
+    <div class="mt-4 bg-gray-800 p-6 rounded-lg">
+      <h3 class="text-2xl font-bold mb-4">Your Fitness Status</h3>
+      <p id="bmr-result"></p>
+      <p id="fitness-status"></p>
+      <p class="pop-up" id="percentile-result"></p>
+    </div>
+  </section>
+  <section class="container mx-auto p-8" id="meal-charts">
+    <h2 class="text-3xl font-bold mb-4 fade-in">Personalized Meal Plan</h2>
+    <div class="bg-gray-800 p-6 rounded-lg" id="dynamic-meal-plan">
+      <div class="mb-4">
+        <h3 class="text-2xl font-bold">Your Customized Meal Plan</h3>
+        <p class="text-gray-400">Based on your BMR: <span id="user-bmr-display"></span></p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div id="veg-meal-plan" class="bg-gray-700 p-4 rounded-lg">
+          <h4 class="text-xl font-bold mb-2">Vegetarian Options</h4>
+          <div id="veg-meals"></div>
+        </div>
+        <div id="nonveg-meal-plan" class="bg-gray-700 p-4 rounded-lg">
+          <h4 class="text-xl font-bold mb-2">Non-Vegetarian Options</h4>
+          <div id="nonveg-meals"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container mx-auto p-8" id="workout-influencer">
+    <h2 class="section-title">Workout & Influencer Zone</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="workout-card">
+        <h3 class="text-3xl font-bold mb-6 text-green-400 flex items-center">
+          <i class="fas fa-video mr-3"></i>
+          Upload Workout Video
+        </h3>
+        <form id="workout-upload-form" class="space-y-6">
+          <div>
+            <label class="workout-label">Video Title</label>
+            <input type="text" name="title" class="workout-input" placeholder="Enter your video title" required/>
+          </div>
+          <div>
+            <label class="workout-label">Description</label>
+            <textarea name="description" class="workout-input" rows="3" placeholder="Describe your workout video" required></textarea>
+          </div>
+          <div>
+            <label class="workout-label">Upload Video</label>
+            <div class="relative">
+              <input type="file" name="video" accept="video/*" class="workout-input" required/>
+              <div class="absolute inset-0 flex items-center justify-center bg-gray-800 rounded-lg opacity-0 hover:opacity-100 transition-opacity">
+                <i class="fas fa-cloud-upload-alt text-4xl text-green-400"></i>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label class="workout-label">Add Hashtags</label>
+            <input type="text" name="hashtags" class="workout-input" placeholder="#fitness #workout #gym"/>
+          </div>
+          <button type="submit" class="upload-btn w-full">
+            <i class="fas fa-upload mr-2"></i>
+            Upload Workout
+          </button>
+        </form>
+      </div>
+      
+      <div class="workout-card">
+        <h3 class="text-3xl font-bold mb-6 text-green-400 flex items-center">
+          <i class="fas fa-user-circle mr-3"></i>
+          Body Analysis
+        </h3>
+        <form id="body-analysis-form" class="space-y-6">
+          <div>
+            <label class="workout-label">Upload Photo</label>
+            <div class="relative">
+              <input type="file" name="photo" accept="image/*" class="workout-input" required/>
+              <div class="absolute inset-0 flex items-center justify-center bg-gray-800 rounded-lg opacity-0 hover:opacity-100 transition-opacity">
+                <i class="fas fa-camera text-4xl text-green-400"></i>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="upload-btn w-full">
+            <i class="fas fa-chart-line mr-2"></i>
+            Get Analysis
+          </button>
+        </form>
+        <div id="analysis-result" class="mt-6">
+          <div id="analysis-content" class="mt-4"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container mx-auto p-8" id="workout-feed">
+    <h2 class="section-title">Workout Feed</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div id="workout-videos" class="space-y-6"></div>
+    </div>
+  </section>
+
+  <!-- Video Modal -->
+  <div id="video-modal" class="fixed inset-0 bg-black bg-opacity-75 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="bg-gray-800 rounded-lg max-w-4xl w-full">
+        <div class="flex justify-between items-center p-4 border-b border-gray-700">
+          <h3 class="text-xl font-bold text-green-400" id="modal-title"></h3>
+          <button onclick="closeVideoModal()" class="text-gray-400 hover:text-white">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="p-4">
+          <video id="modal-video" class="w-full rounded" controls>
+            Your browser does not support the video tag.
+          </video>
+          <div class="mt-4">
+            <div class="flex items-center space-x-4">
+              <img id="modal-avatar" class="w-10 h-10 rounded-full" src="" alt=""/>
+              <div>
+                <p id="modal-uploader" class="font-bold text-green-400"></p>
+                <p id="modal-date" class="text-sm text-gray-400"></p>
+              </div>
+            </div>
+            <p id="modal-description" class="mt-2 text-gray-300"></p>
+            <div id="modal-hashtags" class="mt-2 flex flex-wrap gap-2"></div>
+            <div class="mt-4 flex items-center space-x-4">
+              <button onclick="likeVideoInModal()" class="flex items-center space-x-1 text-red-500 hover:text-red-600">
+                <i class="fas fa-heart"></i>
+                <span id="modal-likes">0</span>
+              </button>
+              <button onclick="focusCommentInput()" class="flex items-center space-x-1 text-gray-400 hover:text-white">
+                <i class="fas fa-comment"></i>
+                <span id="modal-comment-count">0</span>
+              </button>
+            </div>
+            <div class="mt-4">
+              <div class="flex space-x-2">
+                <input type="text" 
+                       id="modal-comment-input"
+                       placeholder="Add a comment..." 
+                       class="flex-1 p-2 rounded bg-gray-700 text-white"
+                       onkeypress="if(event.key === 'Enter') addCommentInModal()">
+                <button onclick="addCommentInModal()"
+                        class="bg-green-600 px-4 py-2 rounded hover:bg-green-700">
+                  Post
+                </button>
+              </div>
+              <div id="modal-comments" class="mt-2 space-y-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="container mx-auto p-8" id="workout-tips">
+    <h2 class="section-title">Workout Tips & Videos</h2>
+    <div class="workout-card">
+      <div class="mb-8">
+        <h3 class="text-3xl font-bold text-green-400 mb-6 flex items-center">
+          <i class="fas fa-video mr-3"></i>
+          Your Uploaded Videos
+        </h3>
+        <div id="workout-videos" class="space-y-6"></div>
+      </div>
+      
+      <div class="mt-12">
+        <h3 class="text-3xl font-bold text-green-400 mb-6 flex items-center">
+          <i class="fas fa-lightbulb mr-3"></i>
+          Popular Workout Tips
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="workout-tip-card">
+            <i class="fas fa-dumbbell workout-tip-icon"></i>
+            <h4 class="text-2xl font-bold text-green-400 mb-3">Proper Form</h4>
+            <p class="text-gray-300">Learn the correct form for common exercises to prevent injury and maximize results.</p>
+          </div>
+          <div class="workout-tip-card">
+            <i class="fas fa-running workout-tip-icon"></i>
+            <h4 class="text-2xl font-bold text-green-400 mb-3">Warm-up Routines</h4>
+            <p class="text-gray-300">Essential warm-up exercises to prepare your body for intense workouts.</p>
+          </div>
+          <div class="workout-tip-card">
+            <i class="fas fa-apple-alt workout-tip-icon"></i>
+            <h4 class="text-2xl font-bold text-green-400 mb-3">Nutrition Tips</h4>
+            <p class="text-gray-300">Proper nutrition guidelines for pre and post-workout meals.</p>
+          </div>
+          <div class="workout-tip-card">
+            <i class="fas fa-bed workout-tip-icon"></i>
+            <h4 class="text-2xl font-bold text-green-400 mb-3">Recovery Methods</h4>
+            <p class="text-gray-300">Effective recovery techniques to prevent muscle soreness and improve performance.</p>
+          </div>
+          <div class="workout-tip-card">
+            <i class="fas fa-calendar-alt workout-tip-icon"></i>
+            <h4 class="text-2xl font-bold text-green-400 mb-3">Workout Planning</h4>
+            <p class="text-gray-300">How to create an effective workout routine based on your goals.</p>
+          </div>
+          <div class="workout-tip-card">
+            <i class="fas fa-chart-line workout-tip-icon"></i>
+            <h4 class="text-2xl font-bold text-green-400 mb-3">Progress Tracking</h4>
+            <p class="text-gray-300">Methods to track your fitness progress and stay motivated.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container mx-auto p-8" id="step-tracking">
+    <h2 class="section-title">Step Tracking</h2>
+    <div class="workout-card">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <div class="step-card">
+          <div class="step-number" id="current-steps">0</div>
+          <div class="step-label">Current Steps</div>
+          <div class="progress-bar mt-4">
+            <div id="step-progress" class="progress-fill" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number" id="step-target">10000</div>
+          <div class="step-label">Daily Target</div>
+          <input type="number" 
+                 id="step-target-input" 
+                 class="workout-input text-center text-2xl mt-4" 
+                 value="10000"/>
+        </div>
+        <div class="step-card">
+          <div class="step-number" id="calories-burned">0</div>
+          <div class="step-label">Calories Burned</div>
+        </div>
+      </div>
+      <div class="mt-8 text-center">
+        <button id="start-tracking" class="upload-btn">
+          <i class="fas fa-play mr-2"></i>
+          Start Tracking
+        </button>
+      </div>
+    </div>
+  </section>
+  <section class="container mx-auto p-8" id="developers-info">
+    <h2 class="text-3xl font-bold mb-4 fade-in">Developers Info</h2>
+    <div class="bg-gray-800 p-6 rounded-lg">
+      <p class="mb-4">BM Fitness Ware is built by a dedicated team to help you achieve your fitness goals.</p>
+      <ul class="list-disc list-inside">
+        <li class="font-bold">Team Lead: Anmol Dubey</li>
+        <li class="font-bold">Backend & Frontend: Helen. P. Juney, Anurag Modanwal</li>
+      </ul>
+    </div>
+  </section>
+  <section class="container mx-auto p-8" id="global-stats">
+    <h2 class="text-3xl font-bold mb-4 fade-in">Global Fitness Statistics</h2>
+    <div class="bg-gray-800 p-6 rounded-lg">
+      <h3 class="text-2xl font-bold mb-4">Global Population Statistics</h3>
+      <p class="text-xl mb-4" id="underweight"><span class="font-bold">Underweight:</span> 20% of the global population is underweight. This category includes individuals who have a BMI less than 18.5.</p>
+      <p class="text-xl mb-4" id="healthy"><span class="font-bold">Healthy:</span> 50% of the global population is considered healthy. This category includes individuals who have a BMI between 18.5 and 24.9.</p>
+      <p class="text-xl mb-4" id="overweight"><span class="font-bold">Overweight:</span> 30% of the global population is overweight. This category includes individuals who have a BMI of 25 or higher.</p>
+      <p class="text-xl mb-4"><span class="font-bold">Total World Population:</span> 7.9 Billion</p>
+    </div>
+  </section>
+  <section class="container mx-auto p-8" id="help-support">
+    <h2 class="text-3xl font-bold mb-4 fade-in">Help & Support</h2>
+    <div class="bg-gray-800 p-6 rounded-lg">
+      <p class="mb-4">If you have any questions or need support, feel free to reach out to us.</p>
+      <ul class="list-disc list-inside">
+        <li class="font-bold">Email: support@anmoldubey2648@gmail.com</li>
+        <li class="font-bold">Phone: +626132xxxx</li>
+      </ul>
+    </div>
+  </section>
+  <div class="floating-btn" onclick="toggleFloatingMenu()">
+    <i class="fas fa-plus"></i>
+  </div>
+  <div class="floating-menu" id="floating-menu">
+    <a href="#workout-tips">Workout Tips</a>
+    <a href="#become-influencer">Become Influencer</a>
+    <a href="#upload-photo">Upload Photo</a>
+  </div>
+</body>
+</html>

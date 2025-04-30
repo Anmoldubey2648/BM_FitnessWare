@@ -78,6 +78,11 @@ BM FITNESS/
 For support, please contact:
 - Email: support@anmoldubey2648@gmail.com
 
+## 👨‍💻 Author
+Anmol Dubey
+GitHub: https://github.com/Anmoldubey2648
+LinkedIn:https://www.linkedin.com/in/anmol-dubey264
+
 ## Coming Soon
 
 - Workout Videos Integration
@@ -92,3 +97,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
